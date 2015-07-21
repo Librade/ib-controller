@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -37,6 +38,9 @@ class Settings {
     private Settings() { }
 
     static void load(String path) {
+        if (path == null || path.isEmpty()) {
+            return;
+        }
         _Props.clear();
         try {
             File f = new File(path);
@@ -58,7 +62,7 @@ class Settings {
      */
     static String getString(String key,
                             String defaultValue) {
-        String value = _Props.getProperty(key, defaultValue);
+        String value = getProperty(key, defaultValue);
         
         // handle key=[empty string] in .ini file 
         if (value.isEmpty()) {
@@ -74,7 +78,7 @@ class Settings {
      */
     static int getInt(String key,
                       int defaultValue) {
-        String value = _Props.getProperty(key);
+        String value = getProperty(key);
 
         // handle key missing or key=[empty string] in .ini file 
         if (value == null || value.length() == 0) {        
@@ -96,7 +100,7 @@ class Settings {
 
     static char getChar(String key,
                         String defaultValue) {
-        String value = _Props.getProperty(key, defaultValue);
+        String value = getProperty(key, defaultValue);
 
         // handle key missing or key=[empty string] in .ini file 
         if (value == null || value.length() == 0) {
@@ -122,7 +126,7 @@ class Settings {
      */
     static double getDouble(String key,
                             double defaultValue) {
-        String value = _Props.getProperty(key);
+        String value = getProperty(key);
 
         // handle key missing or key=[empty string] in .ini file 
         if (value == null || value.length() == 0) {        
@@ -149,7 +153,7 @@ class Settings {
      */
     static boolean getBoolean(String key,
                               boolean defaultValue) {
-        String value = _Props.getProperty(key);
+        String value = getProperty(key);
 
         // handle key missing or key=[empty string] in .ini file 
         if (value == null || value.length() == 0) {        
@@ -169,4 +173,51 @@ class Settings {
         }
     }
 
+    /**
+     * Method checks for system, than environment property, than property from file, and returns it.
+     * @param pPropertyName property name
+     * @return property
+     */
+    public static String getProperty(String pPropertyName) {
+        if (pPropertyName == null || pPropertyName.isEmpty()) {
+            return null;
+        }
+        String property = System.getProperty(pPropertyName);
+        if (property != null) {
+            return property;
+        }
+        if (System.getenv() != null) {
+            property = System.getenv().get(pPropertyName);
+            if (property != null) {
+                return property;
+            }
+        }
+        return _Props.getProperty(pPropertyName);
+    }
+
+    /**
+     * Method checks for system, than environment property, than property from file, and returns it.
+     * @param pPropertyName property name
+     * @return property
+     */
+    public static String getProperty(String pPropertyName, String pDefaltValue) {
+        if (pPropertyName == null || pPropertyName.isEmpty()) {
+            return null;
+        }
+        String property = System.getProperty(pPropertyName);
+        if (property != null) {
+            return property;
+        }
+        if (System.getenv() != null) {
+            property = System.getenv().get(pPropertyName);
+            if (property != null) {
+                return property;
+            }
+        }
+        return _Props.getProperty(pPropertyName, pDefaltValue);
+    }
 }
+
+
+
+
