@@ -367,12 +367,12 @@ public class IBController {
         } else {// args.length >= 1
             iniPath = args[0];
         }
-        File finiPath = new File(iniPath);
-        if (!finiPath.isFile() || !finiPath.exists()) {
-            Utils.logError("ini file \"" + iniPath +
-                               "\" either does not exist, or is a directory.  quitting...");
-            System.exit(1);
-        }
+//        File finiPath = new File(iniPath);
+//        if (!finiPath.isFile() || !finiPath.exists()) {
+//            Utils.logError("ini file \"" + iniPath +
+//                               "\" either does not exist, or is a directory.  quitting...");
+//            System.exit(1);
+//        }
         Utils.logToConsole("ini file is " + iniPath);
         Settings.load(iniPath);
     }
