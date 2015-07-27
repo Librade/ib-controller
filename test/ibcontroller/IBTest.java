@@ -1,5 +1,6 @@
 package ibcontroller;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -14,8 +15,9 @@ public class IBTest {
 
     @Test
     public void test() throws Exception {
+        Locale.setDefault(new Locale("en"));
         // IB controller properties
-        System.setProperty("LogToConsole", "yes");
+        System.setProperty("LogToConsole", "no");
         System.setProperty("FIX", "no");
         System.setProperty("IbLoginId", "edemo");
         System.setProperty("IbPassword", "demouser");
@@ -44,12 +46,11 @@ public class IBTest {
         currentDate.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
         String saturday = currentDate.getDisplayName(Calendar.DAY_OF_WEEK , Calendar.LONG, Locale.getDefault());
         System.setProperty("ClosedownAt", saturday + " 23:00");
-        System.setProperty("IbDir", "/tmp/tws-" + System.currentTimeMillis());
-
+        System.setProperty("IbDir", System.getProperty("user.home") + File.separator + "tws" + File.separator + System.currentTimeMillis());
 
         IBGatewayController gw = new IBGatewayController();
         gw.main(new String[]{"", "edemo", "demouser"});
-        Thread.sleep(SECONDS.toMillis(30));
+        Thread.sleep(SECONDS.toMillis(20));
     }
 }
 

@@ -24,6 +24,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
@@ -227,7 +228,7 @@ public class IBController {
         getTWSUserNameAndPassword(args);
         getFIXUserNameAndPassword(args);
         
-        startIBControllerServer();
+        //startIBControllerServer();
 
         startShutdownTimerIfRequired();
 
@@ -508,6 +509,7 @@ public class IBController {
     private static void startGateway() {
         String[] twsArgs = new String[1];
         twsArgs[0] = getTWSSettingsDirectory();
+        System.out.println("TWS args:" + Arrays.toString(twsArgs));
         ibgateway.GWClient.main(twsArgs);
     }
 
