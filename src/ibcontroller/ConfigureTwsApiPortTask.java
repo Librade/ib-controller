@@ -56,6 +56,15 @@ class ConfigureTwsApiPortTask implements Runnable{
             Component comp = Utils.findComponent(configDialog, "Socket port");
             if (comp == null) throw new IBControllerException("could not find socket port component");
 
+            JCheckBox readOnly = Utils.findCheckBox(configDialog, "Read-Only API");
+            if (readOnly == null) throw new IBControllerException("could not find Read-Only API checkbox");
+            if (readOnly.isSelected()) {
+                readOnly.doClick();
+                Utils.logToConsole("TWS has been configured to not be read-only.");
+            } else {
+                Utils.logToConsole("TWS is already configured to not be read-only.");
+            }
+
             JTextField tf = Utils.findTextField((Container)comp, 0);
             if (tf == null) throw new IBControllerException("could not find socket port field");
             
